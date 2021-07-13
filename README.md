@@ -6,15 +6,9 @@ Gradle
 
 
 <h3>Running Instructions: </h3>
-For Windows build and run:
+After cloning code build and run:
 
 ```sh
 gradlew build
 gradlew run
-```
-
-For MacOS/Linux build and run:
-```sh
-./gradlew build
-./gradlew run
 ```
