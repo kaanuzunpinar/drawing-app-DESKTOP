@@ -16,17 +16,21 @@ import java.util.ArrayList;
 
 public class MainPageController {
     @FXML private AnchorPane root;
-    @FXML private Canvas canvas;
     @FXML private Button b1;
+
+    //Main canvas and graphic content.
+    @FXML private Canvas canvas;
+    private GraphicsContext gc;
+
     //temp canvas for drawing lines etc.
     @FXML private Canvas temp;
-
-    private GraphicsContext gc;
     private GraphicsContext tempGc;
 
+    private Image image;
 
     private double startX;
     private double startY;
+    private boolean startedDrawing=false;
 
     ArrayList<Image> snaps;
     public MainPageController(){
@@ -47,21 +51,21 @@ public class MainPageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Image image=new Image(fi);
+        image=new Image(fi);
         gc.drawImage(image,0,0);
+        setTempCanvas(image);
+    }
+
+
+    private void setTempCanvas(Image img){//temp canvas settings.
+        double width =img.getWidth() , height=img.getHeight();
+        canvas.setWidth(width);
+        canvas.setHeight(height);
+        temp.setWidth(canvas.getWidth());
+        temp.setHeight(canvas.getHeight());
         tempGc= temp.getGraphicsContext2D();
     }
 
-/*
-    private void setTempCanvas(){//temp canvas settings.
-        temp.setWidth(canvas.getWidth());
-        temp.setHeight(canvas.getHeight());
-        temp.setLayoutX(canvas.getLayoutX());
-        temp.setLayoutY(canvas.getLayoutY());
-        tempGc= temp.getGraphicsContext2D();
-        temp.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
-    }
-*/
     @FXML
     public void mousePressed(MouseEvent event){
         startX=event.getX();
@@ -69,23 +73,27 @@ public class MainPageController {
     }
     @FXML
     public void mouseReleased(MouseEvent event){
-        SnapshotParameters parameters=new SnapshotParameters();
-        parameters.setFill(Color.TRANSPARENT);
-        Image snap=tempGc.getCanvas().snapshot(parameters,null);
-        //snaps.add(snap);
-        gc.drawImage(snap,0,0);
-        //temp=new Canvas();
-        //setTempCanvas();
+        if(startedDrawing){
+            SnapshotParameters parameters=new SnapshotParameters();
+            parameters.setFill(Color.TRANSPARENT);
+            Image snap=tempGc.getCanvas().snapshot(parameters,null);
+            snaps.add(snap);
+            render();
+            startedDrawing=false;
+        }
     }
     @FXML
     public void mouseDragged(MouseEvent event){
+        startedDrawing=true;
        tempGc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
        tempGc.strokeLine(startX,startY, event.getX(), event.getY());
-    /*
-        GraphicsContext context = temp.getGraphicsContext2D();
-        context.clearRect(0, 0, temp.getWidth(), temp.getHeight());
-        context.strokeLine(startX,startY, event.getSceneX(), event.getSceneY());*/
 
     }
 
+    public void render(){
+        gc.drawImage(image,0,0);
+        for(Image img : snaps){
+            gc.drawImage(img,0,0);
+        }
+    }
 }
