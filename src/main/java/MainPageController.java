@@ -1,30 +1,30 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.awt.image.WritableRenderedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainPageController {
-    @FXML private AnchorPane root;
-    @FXML private Button uploadButton;
-    @FXML private Button saveButton;
+    @FXML private Slider slider;
+    @FXML private ChoiceBox shape;
 
     //Main canvas and graphic content.
     @FXML private Canvas canvas;
@@ -39,13 +39,37 @@ public class MainPageController {
     private double startX;
     private double startY;
     private boolean startedDrawing=false;
+    private double lineWidth;
+    private Color lineColor;
+    private int shapeCode;//0 for line 1 for point
 
     ArrayList<Image> snaps;
-    public MainPageController(){
+    @FXML
+    public void initialize(){
+        lineWidth=1.0;
+        shapeCode=0;
+        lineColor=Color.BLACK;
         snaps=new ArrayList<>();
-    }
-    public void press(){
         gc = canvas.getGraphicsContext2D();
+
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                lineWidth=newValue.doubleValue();
+            }
+        });
+
+        shape.setItems(FXCollections.observableArrayList(
+                "Line", "Point"));
+        shape.setValue("Line");
+        shape.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                shapeCode=newValue.intValue();
+            }
+        });
+     }
+    public void press(){
 
         FileChooser fileChooser= new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -79,11 +103,26 @@ public class MainPageController {
 
     @FXML
     public void mousePressed(MouseEvent event){
+        tempGc.setLineWidth(this.lineWidth);
+        tempGc.setStroke(this.lineColor);
+        tempGc.setFill(this.lineColor);
         startX=event.getX();
         startY=event.getY();
+        if(shapeCode==1){
+            tempGc.fillOval(startX-(lineWidth/2),startY-(lineWidth/2),lineWidth,lineWidth);
+        }
     }
+
     @FXML
     public void mouseReleased(MouseEvent event){
+        if(shapeCode==1){
+            SnapshotParameters parameters=new SnapshotParameters();
+            parameters.setFill(Color.TRANSPARENT);
+            Image snap=tempGc.getCanvas().snapshot(parameters,null);
+            snaps.add(snap);
+            render();
+            return;
+        }
         if(startedDrawing){
             SnapshotParameters parameters=new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);
@@ -95,11 +134,18 @@ public class MainPageController {
     }
     @FXML
     public void mouseDragged(MouseEvent event){
+        if(shapeCode==1) return;
         startedDrawing=true;
-       tempGc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
-       tempGc.strokeLine(startX,startY, event.getX(), event.getY());
+        tempGc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
+        tempGc.strokeLine(startX,startY, event.getX(), event.getY());
 
     }
+    @FXML
+    public void colorChanged(Event e){
+        Color color=((ColorPicker)(e.getSource())).getValue();
+        this.lineColor=color;
+    }
+
 
     public void render(){
         gc.drawImage(image,0,0);
