@@ -1,3 +1,4 @@
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
@@ -5,18 +6,25 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.awt.image.WritableRenderedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainPageController {
     @FXML private AnchorPane root;
-    @FXML private Button b1;
+    @FXML private Button uploadButton;
+    @FXML private Button saveButton;
 
     //Main canvas and graphic content.
     @FXML private Canvas canvas;
@@ -58,11 +66,14 @@ public class MainPageController {
 
 
     private void setTempCanvas(Image img){//temp canvas settings.
-        double width =img.getWidth() , height=img.getHeight();
+        double width =img.getWidth();
+        double height=img.getHeight();
         canvas.setWidth(width);
         canvas.setHeight(height);
         temp.setWidth(canvas.getWidth());
         temp.setHeight(canvas.getHeight());
+        temp.setLayoutX(canvas.getLayoutX());
+        temp.setLayoutY(canvas.getLayoutY());
         tempGc= temp.getGraphicsContext2D();
     }
 
@@ -94,6 +105,15 @@ public class MainPageController {
         gc.drawImage(image,0,0);
         for(Image img : snaps){
             gc.drawImage(img,0,0);
+        }
+    }
+    public void save(){
+        Image download=canvas.snapshot(new SnapshotParameters(),null);
+        File outputFile =new File(System.getProperty("user.dir")+"/image.png");
+        try {
+            ImageIO.write( SwingFXUtils.fromFXImage(download, null),"png",outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
