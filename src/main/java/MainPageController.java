@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
@@ -43,14 +42,15 @@ public class MainPageController {
     private Color lineColor;
     private int shapeCode;//0 for line 1 for point
 
-    ArrayList<Image> snaps;
+    private Renderer renderer;
+
     @FXML
     public void initialize(){
         lineWidth=1.0;
         shapeCode=0;
         lineColor=Color.BLACK;
-        snaps=new ArrayList<>();
         gc = canvas.getGraphicsContext2D();
+        renderer=new Renderer(image);
 
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -100,11 +100,12 @@ public class MainPageController {
         temp.setLayoutY(canvas.getLayoutY());
         tempGc= temp.getGraphicsContext2D();
     }
-
     @FXML
     public void mousePressed(MouseEvent event){
         tempGc.setLineWidth(this.lineWidth);
         tempGc.setStroke(this.lineColor);
+
+
         tempGc.setFill(this.lineColor);
         startX=event.getX();
         startY=event.getY();
@@ -119,16 +120,18 @@ public class MainPageController {
             SnapshotParameters parameters=new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);
             Image snap=tempGc.getCanvas().snapshot(parameters,null);
-            snaps.add(snap);
-            render();
+            Draw draw=new Draw(snap,1);
+            renderer.drawings.add(draw);
+            renderer.render(gc);
             return;
         }
         if(startedDrawing){
             SnapshotParameters parameters=new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);
             Image snap=tempGc.getCanvas().snapshot(parameters,null);
-            snaps.add(snap);
-            render();
+            Draw draw=new Draw(snap,0);
+            renderer.drawings.add(draw);
+            renderer.render(gc);
             startedDrawing=false;
         }
     }
@@ -147,12 +150,7 @@ public class MainPageController {
     }
 
 
-    public void render(){
-        gc.drawImage(image,0,0);
-        for(Image img : snaps){
-            gc.drawImage(img,0,0);
-        }
-    }
+
     public void save(){
         Image download=canvas.snapshot(new SnapshotParameters(),null);
         File outputFile =new File(System.getProperty("user.dir")+"/image.png");
