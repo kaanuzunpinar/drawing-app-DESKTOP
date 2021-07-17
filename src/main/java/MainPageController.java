@@ -33,7 +33,7 @@ public class MainPageController {
     @FXML private Canvas temp;
     private GraphicsContext tempGc;
 
-    private Image image;
+    public static Image image;
 
     private double startX;
     private double startY;
@@ -50,7 +50,7 @@ public class MainPageController {
         shapeCode=0;
         lineColor=Color.BLACK;
         gc = canvas.getGraphicsContext2D();
-        renderer=new Renderer(image);
+        renderer=new Renderer(gc);
 
         slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -121,8 +121,8 @@ public class MainPageController {
             parameters.setFill(Color.TRANSPARENT);
             Image snap=tempGc.getCanvas().snapshot(parameters,null);
             Draw draw=new Draw(snap,1);
-            renderer.drawings.add(draw);
-            renderer.render(gc);
+            tempGc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
+            drawAndRender(draw);
             return;
         }
         if(startedDrawing){
@@ -130,11 +130,21 @@ public class MainPageController {
             parameters.setFill(Color.TRANSPARENT);
             Image snap=tempGc.getCanvas().snapshot(parameters,null);
             Draw draw=new Draw(snap,0);
-            renderer.drawings.add(draw);
-            renderer.render(gc);
+            tempGc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
+            drawAndRender(draw);
             startedDrawing=false;
         }
     }
+
+
+    private void drawAndRender(Draw draw){
+        gc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
+        gc.drawImage(image,0,0);
+        renderer.AddShape(draw);
+        renderer.render();
+    }
+
+
     @FXML
     public void mouseDragged(MouseEvent event){
         if(shapeCode==1) return;
@@ -148,7 +158,14 @@ public class MainPageController {
         Color color=((ColorPicker)(e.getSource())).getValue();
         this.lineColor=color;
     }
-
+    @FXML
+    public void undo(){
+        renderer.undo();
+    }
+    @FXML
+    public void redo(){
+        renderer.redo();
+    }
 
 
     public void save(){
@@ -160,4 +177,5 @@ public class MainPageController {
             e.printStackTrace();
         }
     }
+
 }
