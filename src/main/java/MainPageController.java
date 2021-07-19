@@ -70,7 +70,7 @@ public class MainPageController {
         });
      }
     public void press(){
-
+        JavaPostreSQL.writeToDatabase();
         FileChooser fileChooser= new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.JPG","*.jpg","*.png","*.png","*.JPEG","*.jpeg")
