@@ -3,6 +3,7 @@
 <h3>Requirements: </h3>
 
 Gradle
+PostreSQL
 
 
 <h3>Running Instructions: </h3>
