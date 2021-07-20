@@ -21,9 +21,16 @@ public class LoginController {
 
         //check for username and pw
         //if true
-        Parent root= FXMLLoader.load( getClass().getResource("MainPage.fxml") );
-        Scene s1 = ((Button)(event.getSource())).getScene();
-        s1.setRoot(root);
+        if(JavaPostreSQL.writeToDatabase(name,pw)){
+            Parent root= FXMLLoader.load( getClass().getResource("MainPage.fxml") );
+            Scene s1 = ((Button)(event.getSource())).getScene();
+            s1.setRoot(root);
+        }
+        else{
+            System.out.println("Error");
+        }
+
+
 
     }
 

@@ -1,29 +1,28 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class JavaPostreSQL {
-    public static void writeToDatabase(){
+    public static boolean writeToDatabase(String username,String password){
         String url="jdbc:postgresql://localhost:5432/postgres";
-        String user="postgres";
-        String password="root";
-
-        String name="WORKED";
-        String query="INSERT INTO person(first_name) VALUES (?)";
+        String query="SELECT * FROM users WHERE username= ? AND password=?";
 
         try {
             Class.forName("org.postgresql.Driver");
-            Connection connection= DriverManager.getConnection(url,user,password);
+            Connection connection= DriverManager.getConnection(url,"postgres","root");
             PreparedStatement pst= connection.prepareStatement(query);
-            pst.setString(1,name);
-            pst.executeUpdate();
-            System.out.println("success");
+            pst.setString(1,username);
+            pst.setString(2,password);
+            ResultSet resultSet=pst.executeQuery();
+            if(!resultSet.next()){
+                return false;
+            }
+            else{
+                return true;
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+        return false;
     }
 }
