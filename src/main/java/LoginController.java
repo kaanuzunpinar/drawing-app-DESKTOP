@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -21,8 +20,12 @@ public class LoginController {
 
         //check for username and pw
         //if true
-        if(JavaPostreSQL.writeToDatabase(name,pw)){
-            Parent root= FXMLLoader.load( getClass().getResource("MainPage.fxml") );
+        User user= JavaPostreSQL.login(name,pw);
+        if(user!=null){
+            FXMLLoader loader=new FXMLLoader(getClass().getResource("MainPage.fxml"));
+            Parent root= loader.load();
+            MainPageController mainPageController =loader.getController();
+            mainPageController.setUser(user);
             Scene s1 = ((Button)(event.getSource())).getScene();
             s1.setRoot(root);
         }

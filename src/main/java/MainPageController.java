@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -19,11 +20,14 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainPageController {
     @FXML private Slider slider;
     @FXML private ChoiceBox shape;
+
+    @FXML private Label name;
+    @FXML private Label surname;
 
     //Main canvas and graphic content.
     @FXML private Canvas canvas;
@@ -43,6 +47,8 @@ public class MainPageController {
     private int shapeCode;//0 for line 1 for point
 
     private Renderer renderer;
+
+    public User user;
 
     @FXML
     public void initialize(){
@@ -177,4 +183,9 @@ public class MainPageController {
         }
     }
 
+    public void setUser(User user){
+        this.user=user;
+        this.name.setText(user.name);
+        this.surname.setText(user.surname);
+    }
 }
