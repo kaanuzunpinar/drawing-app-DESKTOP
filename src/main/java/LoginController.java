@@ -22,10 +22,10 @@ public class LoginController {
         //if true
         User user= JavaPostreSQL.login(name,pw);
         if(user!=null){
-            FXMLLoader loader=new FXMLLoader(getClass().getResource("MainPage.fxml"));
+            FXMLLoader loader=new FXMLLoader(getClass().getResource("Menu.fxml"));
             Parent root= loader.load();
-            MainPageController mainPageController =loader.getController();
-            mainPageController.setUser(user);
+            MenuController menuController=loader.getController();
+            menuController.setUser(user);
             Scene s1 = ((Button)(event.getSource())).getScene();
             s1.setRoot(root);
         }

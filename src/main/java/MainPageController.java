@@ -38,6 +38,7 @@ public class MainPageController {
     private GraphicsContext tempGc;
 
     public static Image image;
+    public static Image download;
 
     private double startX;
     private double startY;
@@ -75,23 +76,6 @@ public class MainPageController {
             }
         });
      }
-    public void press(){
-        FileChooser fileChooser= new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.JPG","*.jpg","*.png","*.png","*.JPEG","*.jpeg")
-        );
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        FileInputStream fi=null;
-        try {
-            fi=new FileInputStream( selectedFile.getAbsolutePath());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        image=new Image(fi);
-        gc.drawImage(image,0,0);
-        setTempCanvas(image);
-    }
 
 
     private void setTempCanvas(Image img){//temp canvas settings.
@@ -139,6 +123,8 @@ public class MainPageController {
             drawAndRender(draw);
             startedDrawing=false;
         }
+        download=null;
+        download=canvas.snapshot(new SnapshotParameters(),null);
     }
 
 
@@ -173,19 +159,13 @@ public class MainPageController {
     }
 
 
-    public void save(){
-        Image download=canvas.snapshot(new SnapshotParameters(),null);
-        File outputFile =new File(System.getProperty("user.dir")+"/image.png");
-        try {
-            ImageIO.write( SwingFXUtils.fromFXImage(download, null),"png",outputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
+    public void setImage(Image img){
+        this.image=img;
+        gc.drawImage(image,0,0);
+        setTempCanvas(image);
     }
 
-    public void setUser(User user){
-        this.user=user;
-        this.name.setText(user.name);
-        this.surname.setText(user.surname);
-    }
+
 }

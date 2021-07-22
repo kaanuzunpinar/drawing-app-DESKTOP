@@ -17,7 +17,6 @@ public class Main extends Application {
 
         scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

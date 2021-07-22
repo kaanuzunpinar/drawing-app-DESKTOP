@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="label_logined" text="LOGINED!" textAlignment="CENTER" textFill="#12c60f">
+               <font>
+                  <Font size="48.0" />
+               </font></Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="132.0" prefWidth="1200.0">
+         <children>
+            <AnchorPane prefHeight="101.0" prefWidth="542.0">
+               <children>
+                  <Label layoutX="88.0" layoutY="14.0" prefHeight="27.0" prefWidth="82.0" text="Name:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="name" layoutX="282.0" layoutY="14.0" prefHeight="27.0" prefWidth="175.0" text="-">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="88.0" layoutY="41.0" prefHeight="27.0" prefWidth="82.0" text="Surname:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="surname" layoutX="282.0" layoutY="41.0" prefHeight="27.0" prefWidth="260.0" text="-">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="88.0" layoutY="67.0" prefHeight="27.0" prefWidth="118.0" text="Latest Login:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="login" layoutX="282.0" layoutY="67.0" prefHeight="27.0" prefWidth="175.0" text="-">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox prefHeight="559.0" prefWidth="1200.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="564.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="194.0" text="REGISTER NEW PERSON" textAlignment="CENTER" textFill="#ee0606">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </Label>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Name:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="nameF" prefHeight="25.0" prefWidth="175.0" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Surname:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="surnameF" prefHeight="25.0" prefWidth="175.0" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Citizen ID:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="citizenId" prefHeight="25.0" prefWidth="175.0" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Adress:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="adress" prefHeight="25.0" prefWidth="175.0" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Birth Place:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="birthPlace" prefHeight="25.0" prefWidth="175.0" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Birth Date:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <DatePicker fx:id="birthDate" prefHeight="25.0" prefWidth="175.0" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Upload Image:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#choose" prefHeight="25.0" prefWidth="175.0" text="Choose" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="268.0" text="Edit Image:">
+                           <padding>
+                              <Insets left="120.0" />
+                           </padding>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#imageWindow" prefHeight="25.0" prefWidth="175.0" text="Choose" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#save" prefHeight="36.0" prefWidth="325.0" text="SAVE!" textFill="#243625">
+                     <VBox.margin>
+                        <Insets right="40.0" top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox prefHeight="561.0" prefWidth="601.0" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

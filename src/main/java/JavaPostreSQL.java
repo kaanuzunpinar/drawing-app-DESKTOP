@@ -33,4 +33,8 @@ public class JavaPostreSQL {
         }
         return null;
     }
+
+    public static void registerPerson(){
+
+    }
 }
