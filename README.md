@@ -1,6 +1,6 @@
 # drawing-app-DESKTOP
 
-This is an App which allows users to add People to a database with an image and allows them to edit the image with Line and Points. 
+This is an App which allows users to add People to a database with an image and allows them to edit the image with Lines and Points. 
 
 <h3>Requirements: </h3>
 
