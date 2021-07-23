@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class LoginController {
     @FXML private TextField userName;
     @FXML private PasswordField password;
-
+    @FXML private Label wrong;
 
     public void login(ActionEvent event) throws IOException {
         String name=userName.getText();
@@ -30,7 +31,7 @@ public class LoginController {
             s1.setRoot(root);
         }
         else{
-            System.out.println("Error");
+            wrong.setText("WRONG PASSWORD/USERNAME!");
         }
 
 

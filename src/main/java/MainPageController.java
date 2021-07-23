@@ -112,9 +112,8 @@ public class MainPageController {
             Draw draw=new Draw(snap,1);
             tempGc.clearRect(0,0,gc.getCanvas().getWidth(),gc.getCanvas().getHeight());
             drawAndRender(draw);
-            return;
         }
-        if(startedDrawing){
+        else if(startedDrawing){
             SnapshotParameters parameters=new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);
             Image snap=tempGc.getCanvas().snapshot(parameters,null);
@@ -162,6 +161,7 @@ public class MainPageController {
 
 
     public void setImage(Image img){
+        this.gc.clearRect(0,0,this.gc.getCanvas().getWidth(),this.gc.getCanvas().getHeight());
         this.image=img;
         gc.drawImage(image,0,0);
         setTempCanvas(image);
