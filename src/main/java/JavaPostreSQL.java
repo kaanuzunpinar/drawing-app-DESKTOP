@@ -51,7 +51,7 @@ public class JavaPostreSQL {
                 user.numberOfPeople=resultSet.getInt(1);
             }
             else{
-                System.out.println("asd");
+                System.out.println("Error!");
             }
         }
         catch (Exception e){
@@ -89,7 +89,6 @@ public class JavaPostreSQL {
             pst.setString(3,person.surname);
             pst.setString(4,person.citizenId);
             String[] dates=person.date.split("-");
-            System.out.println(dates[0]);
             LocalDate localDate= LocalDate.of(Integer.parseInt(dates[0]),Integer.parseInt(dates[1]),Integer.parseInt(dates[2]));
             Date date=Date.valueOf(localDate);
             pst.setDate(5,date);
@@ -149,7 +148,6 @@ public class JavaPostreSQL {
             pst.setString(2,person.surname);
             pst.setString(3,person.citizenId);
             String[] dates=person.date.split("-");
-            System.out.println(dates[0]);
             LocalDate localDate= LocalDate.of(Integer.parseInt(dates[0]),Integer.parseInt(dates[1]),Integer.parseInt(dates[2]));
             Date date=Date.valueOf(localDate);
             pst.setDate(4,date);
