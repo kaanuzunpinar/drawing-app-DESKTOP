@@ -12,48 +12,49 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuController">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="74.0" prefWidth="1200.0">
          <children>
-            <Label fx:id="label_logined" text="LOGINED!" textAlignment="CENTER" textFill="#12c60f">
+            <Label fx:id="label_logined" prefHeight="70.0" prefWidth="217.0" text="LOGINED!" textAlignment="CENTER" textFill="#12c60f">
                <font>
                   <Font size="48.0" />
                </font></Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="132.0" prefWidth="1200.0">
+      <HBox alignment="CENTER" prefHeight="138.0" prefWidth="1200.0">
          <children>
-            <AnchorPane prefHeight="101.0" prefWidth="542.0">
+            <AnchorPane prefHeight="152.0" prefWidth="526.0">
                <children>
-                  <Label layoutX="88.0" layoutY="14.0" prefHeight="27.0" prefWidth="82.0" text="Name:">
+                  <Label layoutX="88.0" layoutY="5.0" prefHeight="25.0" prefWidth="82.0" text="Name:">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="name" layoutX="282.0" layoutY="14.0" prefHeight="27.0" prefWidth="175.0" text="-">
+                  <Label fx:id="name" layoutX="352.0" layoutY="5.0" prefHeight="27.0" prefWidth="175.0" text="-">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="88.0" layoutY="41.0" prefHeight="27.0" prefWidth="82.0" text="Surname:">
+                  <Label layoutX="88.0" layoutY="28.0" prefHeight="27.0" prefWidth="82.0" text="Surname:">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="surname" layoutX="282.0" layoutY="41.0" prefHeight="27.0" prefWidth="260.0" text="-">
+                  <Label fx:id="surname" layoutX="351.0" layoutY="28.0" prefHeight="27.0" prefWidth="260.0" text="-">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="88.0" layoutY="67.0" prefHeight="27.0" prefWidth="118.0" text="Latest Login:">
+                  <Label layoutX="88.0" layoutY="54.0" prefHeight="27.0" prefWidth="227.0" text="Number Of People Saved:">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="login" layoutX="282.0" layoutY="67.0" prefHeight="27.0" prefWidth="175.0" text="-">
+                  <Label fx:id="savedPeople" layoutX="352.0" layoutY="56.0" prefHeight="27.0" prefWidth="175.0" text="-">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Button fx:id="roundred" layoutX="182.0" layoutY="102.0" mnemonicParsing="false" onAction="#logout" prefHeight="36.0" prefWidth="169.0" text="LOGOUT" />
                </children>
             </AnchorPane>
          </children>
@@ -171,7 +172,7 @@
                         <Insets top="10.0" />
                      </padding>
                   </HBox>
-                  <Label fx:id="error" prefHeight="27.0" prefWidth="291.0" textAlignment="CENTER" textFill="#ee0909">
+                  <Label fx:id="error" prefHeight="27.0" prefWidth="308.0" textAlignment="CENTER" textFill="#ee0909">
                      <font>
                         <Font size="18.0" />
                      </font>

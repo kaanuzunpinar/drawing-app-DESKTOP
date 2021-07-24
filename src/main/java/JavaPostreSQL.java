@@ -1,9 +1,8 @@
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.math.BigDecimal;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class JavaPostreSQL {
      private static final String url="jdbc:postgresql://localhost:5432/postgres";
@@ -16,7 +15,8 @@ public class JavaPostreSQL {
             Connection connection= DriverManager.getConnection(url,"postgres","root");
             PreparedStatement pst= connection.prepareStatement(query);
             pst.setString(1,username);
-            pst.setString(2,password);
+            String passwordHashed= DigestUtils.sha256Hex(password);
+            pst.setString(2,passwordHashed);
             ResultSet resultSet=pst.executeQuery();
             if(!resultSet.next()){
                 return null;
@@ -28,6 +28,7 @@ public class JavaPostreSQL {
                 String db_name=resultSet.getString(4);
                 String db_surname=resultSet.getString(5);
                 User u1=new User(db_name,db_surname,db_username,db_email,id);
+                timeOfPeople(id,u1);
                 return u1;
             }
         } catch (SQLException throwables) {
@@ -36,6 +37,27 @@ public class JavaPostreSQL {
             e.printStackTrace();
         }
         return null;
+    }
+    public static void timeOfPeople(BigDecimal id,User user){
+        try{
+            Class.forName("org.postgresql.Driver");
+            Connection connection= DriverManager.getConnection(url,"postgres","root");
+
+            String query="SELECT SUM(person.userid) FROM person JOIN users ON users.userid=person.userid WHERE users.userid=?;";
+            PreparedStatement pst= connection.prepareStatement(query);
+            pst.setBigDecimal(1,id);
+            ResultSet resultSet=pst.executeQuery();
+            if(resultSet.next()){
+                user.numberOfPeople=resultSet.getInt(1);
+            }
+            else{
+                System.out.println("asd");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
     public static int findPersonId() throws Exception {
 

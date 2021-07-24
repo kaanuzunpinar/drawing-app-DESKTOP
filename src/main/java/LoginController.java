@@ -28,6 +28,7 @@ public class LoginController {
             MenuController menuController=loader.getController();
             menuController.setUser(user);
             Scene s1 = ((Button)(event.getSource())).getScene();
+            System.out.println(user.numberOfPeople);
             s1.setRoot(root);
         }
         else{

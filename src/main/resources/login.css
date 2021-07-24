@@ -6,6 +6,6 @@
 #label_logined{
     -fx-font-size:48px;
 }
-#info{
+#info,#error{
 -fx-alignment: center ;
 }

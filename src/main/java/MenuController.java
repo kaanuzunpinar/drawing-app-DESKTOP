@@ -1,8 +1,10 @@
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,7 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class MenuController {
-    @FXML private Label name,surname,error,info;
+    @FXML private Label name,surname,error,info,savedPeople;
     @FXML private TextField nameF,surnameF,citizenId,address,birthPlace,
             nameEdit,surnameEdit,citizenIdEdit,addressEdit,birthPlaceEdit,nameSearch,surnameSearch,idSearch;
     @FXML private DatePicker birthDate,birthDateEdit;
@@ -36,6 +38,7 @@ public class MenuController {
         this.user=user;
         this.name.setText(user.name);
         this.surname.setText(user.surname);
+        this.savedPeople.setText(user.numberOfPeople+"");
     }
     public void imageWindow() throws IOException {
         if(image==null){
@@ -110,6 +113,7 @@ public class MenuController {
         }
 
         error.setText("SAVED!");
+        personInfo.setVisible(false);
 
 
     }
@@ -259,5 +263,13 @@ public class MenuController {
         info.setText("SAVED!");
 
 
+    }
+    public void logout(ActionEvent event) throws IOException {
+        this.user=null;
+
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("Login.fxml"));
+        Parent root= loader.load();
+        Scene s1 = ((Button)(event.getSource())).getScene();
+        s1.setRoot(root);
     }
 }
