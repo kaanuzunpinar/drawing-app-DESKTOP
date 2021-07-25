@@ -4,7 +4,7 @@ This is an App which allows users to add People to a database with an image and 
 
 <h3>Requirements: </h3>
 
-Gradle
+Gradlew ( Gradle Wrapper)
 PostgreSQL
 
 
