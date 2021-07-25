@@ -73,20 +73,12 @@ public class MenuController {
     }
 
     public void save(){
-        int personId= 0;
-        try {
-            personId = JavaPostreSQL.findPersonId();
-        } catch (Exception e) {
-            error.setText("Something Went Wrong! Try Again.");
-            return;
-        }
-
-        String filePath=System.getProperty("user.dir")+"/image_"+personId+ ".png";
-        File outputFile =new File(filePath);
+        Person person;
+        String cId=citizenId.getText();
         try{
             LocalDate d=birthDate.getValue();//yyyy-mm-dd
-            Person person=new Person(user.id,nameF.getText(),surnameF.getText(),
-                    citizenId.getText(),birthPlace.getText(),address.getText(),filePath,d.toString());
+            person=new Person(user.id,nameF.getText(),surnameF.getText(),
+                    citizenId.getText(),birthPlace.getText(),address.getText(),null,d.toString());
             if(this.image==null){
                 error.setText("Please Upload an Image!");
                 return;
@@ -104,6 +96,19 @@ public class MenuController {
             error.setText("Please Fill All Areas!");
             return;
         }
+
+        int personId= 0;
+
+        try {
+            personId = JavaPostreSQL.findPersonId(cId);
+
+        } catch (Exception e) {
+            error.setText("Something Went Wrong! Try Again.");
+            return;
+        }
+        String filePath=System.getProperty("user.dir")+"/image_"+personId+ ".png";
+        File outputFile =new File(filePath);
+        person.imagePath=filePath;
         try {
             ImageIO.write( SwingFXUtils.fromFXImage(MainPageController.download, null),"png",outputFile);
         } catch (IOException e) {
@@ -111,11 +116,10 @@ public class MenuController {
             e.printStackTrace();
             return;
         }
+        error.setText("PERSON SAVED WITH ID: "+personId);
 
-        error.setText("SAVED!");
-        personInfo.setVisible(false);
-
-
+       int yeni=Integer.parseInt( this.savedPeople.getText())+1;
+       this.savedPeople.setText(yeni+"");
     }
     public void editName(){
         this.nameEdit.setEditable(true);
